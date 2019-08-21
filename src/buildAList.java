@@ -3,22 +3,49 @@ public class buildAList {
     public static void main(String args) {
         String str = "xyz";
         String[] res = combination(str, 0);
-        //xy xz yz
+        //x xy xyz xz
+    }
+
+    private static String[] comb(String str, String pair,int choose) {
+
+        if (choose == 1) {
+            String[] res = new String[str.length()];
+            for (int i = 0; i < str.length(); i++) {
+                res[i] = String.valueOf(str.charAt(i));
+            }
+            return res;
+        } else {
+            String[] temp = comb(str, choose - 1);
+            return temp;
+        }
+
     }
 
     private static String[] combination(String from, int startIndex) {
-        String[] temp = new String[from.length()];
+        String[] temp = new String[from.length() * 2];
         int j = 0;
+        String base = String.valueOf(from.charAt(startIndex));
+        temp[j] = base;
+        for (int k = 1; k <= from.length(); k++) {
 
-        for (int k = 0; k < from.length(); k++) {
-            String first = String.valueOf(from.charAt(k));
-
-            for (int i = k + 1; i < from.length(); i++) {
-                String cont = first + from.charAt(i);
-                temp[j] = cont;
+            for (int i = startIndex + k; i < from.length(); i++) {
+                temp[j + 1] = temp[j] + from.charAt(i);
                 j++;
+                System.out.println(temp[j]);
             }
+
         }
+
+
+//        for (int k = 0; k < from.length(); k++) {
+//            String first = String.valueOf(from.charAt(k));
+//
+//            for (int i = k + 1; i < from.length(); i++) {
+//                String cont = first + from.charAt(i);
+//                temp[j] = cont;
+//                j++;
+//            }
+//        }
 
         return temp;
     }
@@ -68,18 +95,15 @@ public class buildAList {
         // at remaining positions
         for (int i=start; i<=end && end-i+1 >= r-index; i++) {
             data[index] = arr[i];
-            combinationUtil(arr, data, i+1, end, index+1, r);
+            return combinationUtil(arr, data, i+1, end, index+1, r);
         }
     }
 
     // The main function that prints all combinations of size r
-    // in arr[] of size n. This function mainly uses combinationUtil()
+    // in arr[] of size n.
     static void printCombination(int arr[], int n, int r)
     {
-        // A temporary array to store all combination one by one
         int data[] = new int[r];
-
-        // Print all combination using temprary array 'data[]'
         combinationUtil(arr, data, 0, n-1, 0, r);
     }
 
