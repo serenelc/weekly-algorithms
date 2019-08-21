@@ -1,130 +1,125 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class buildAList {
 
-    public static void main(String args) {
-        String str = "xyz";
-        String[] res = combination(str, 0);
-        //x xy xyz xz
-    }
-
-    private static String[] comb(String str, String pair,int choose) {
-
-        if (choose == 1) {
-            String[] res = new String[str.length()];
-            for (int i = 0; i < str.length(); i++) {
-                res[i] = String.valueOf(str.charAt(i));
-            }
-            return res;
-        } else {
-            String[] temp = comb(str, choose - 1);
-            return temp;
-        }
-
-    }
-
-    private static String[] combination(String from, int startIndex) {
-        String[] temp = new String[from.length() * 2];
-        int j = 0;
-        String base = String.valueOf(from.charAt(startIndex));
-        temp[j] = base;
-        for (int k = 1; k <= from.length(); k++) {
-
-            for (int i = startIndex + k; i < from.length(); i++) {
-                temp[j + 1] = temp[j] + from.charAt(i);
-                j++;
-                System.out.println(temp[j]);
-            }
-
-        }
-
-
-//        for (int k = 0; k < from.length(); k++) {
-//            String first = String.valueOf(from.charAt(k));
-//
-//            for (int i = k + 1; i < from.length(); i++) {
-//                String cont = first + from.charAt(i);
-//                temp[j] = cont;
-//                j++;
-//            }
-//        }
-
-        return temp;
-    }
-
-    static String[] solve(String s) {
-        char[] chars = s.toCharArray();
-        int size = 0;
-        for (int i = 1; i <= s.length(); i++) {
-            size += nChooseR(s.length(), i);
-        }
-        String[] res = new String[size];
-        String[] temp = new String[s.length()];
-
-        String base = String.valueOf(chars[0]);
-        temp[0] = base;
-        for (int i = 1; i < s.length(); i++) {
-            temp[i] = base + chars[i];
-        }
-
-//        for (int i = 0; i < s.length(); i++) {
-//            String x = String.valueOf(chars[i]);
-//        }
-
-        return res;
-    }
-
-    /* arr[]  ---> Input Array
-    data[] ---> Temporary array to store current combination
-    start & end ---> Staring and Ending indexes in arr[]
-    index  ---> Current index in data[]
-    r ---> Size of a combination to be printed */
-    static int[] combinationUtil(int arr[], int data[], int start,
-                                int end, int index, int r) {
-        // Current combination is ready to be printed, print it
-        int[] res = new int[r];
-        if (index == r) {
-            for (int j = 0; j < r; j++) {
-                res[j] = data[j];
-                System.out.print(data[j] + " ");
-            }
-            return res;
-        }
-
-        // replace index with all possible elements. The condition
-        // "end-i+1 >= r-index" makes sure that including one element
-        // at index will make a combination with remaining elements
-        // at remaining positions
-        for (int i=start; i<=end && end-i+1 >= r-index; i++) {
-            data[index] = arr[i];
-            return combinationUtil(arr, data, i+1, end, index+1, r);
-        }
-    }
-
-    // The main function that prints all combinations of size r
-    // in arr[] of size n.
-    static void printCombination(int arr[], int n, int r)
-    {
-        int data[] = new int[r];
-        combinationUtil(arr, data, 0, n-1, 0, r);
-    }
-
-    /*Driver function to check for above function*/
     public static void main (String[] args) {
-        int arr[] = {1, 2, 3, 4, 5};
-        int r = 3;
-        int n = arr.length;
-        printCombination(arr, n, r);
+        List<int[]> generated = generate(5, 2);
+        generated.forEach(arr -> System.out.println(Arrays.toString(arr)));
     }
 
-    private static int nChooseR(int n, int r) {
-        return fact(n) / (fact(r) * fact(n - r));
+    public static List<int[]> generate(int n, int r) {
+
+        List<int[]> combinations = new ArrayList<>();
+        int[] combination = new int[r];
+
+        // initialize with lowest lexicographic combination
+        for (int i = 0; i < r; i++) {
+            combination[i] = i;
+        }
+
+        while (combination[r - 1] < n) {
+            combinations.add(combination.clone());
+
+            // generate next combination in lexicographic order
+            int t = r - 1;
+            while (t != 0 && combination[t] == n - r + t) {
+                t--;
+            }
+            combination[t]++;
+            for (int i = t + 1; i < r; i++) {
+                combination[i] = combination[i - 1] + 1;
+            }
+        }
+
+        return combinations;
     }
 
-    // Returns factorial of n
-    private static int fact(int n) {
-        int res = 1;
-        for (int i = 2; i <= n; i++)
-            res *= i;
-        return res;
-    }
 
 }
+
+/* Model Java solution
+
+import java.io.*;
+        import java.util.*;
+
+public class Solution {
+
+    private static Map<Character,Integer> mapping = new HashMap<Character,Integer>();
+
+    private static void doMapping(String input){
+
+        char[] arr = input.toCharArray();
+        for(int i = 0; i < arr.length; i++){
+            mapping.put(arr[i],i);
+        }
+    }
+
+    private static void generate(String input){
+
+        char[] arr = input.toCharArray();
+        int cycle = input.length();
+        int leng = input.length()-1;
+        List<String> one = new ArrayList<String>();
+        List<String> two = new ArrayList<String>();
+        Set<String> ready = new TreeSet<String>();
+
+        for(int i = 0; i < arr.length; i++){
+            one.add(String.valueOf(arr[i]));
+            ready.add(String.valueOf(arr[i]));
+        }
+        cycle--;
+        int from = Integer.MAX_VALUE;
+        int len = 0;
+        String temp;
+        char thisch;
+
+        while(cycle > 0){
+            for(int i = 0; i < one.size(); i++){
+                temp = one.get(i);
+                thisch = temp.charAt(len);
+                from = Integer.parseInt(String.valueOf(mapping.get(temp.charAt(len))));
+
+                if(from == leng) continue;
+                for(int j = from+1; j < input.length(); j++){
+                    two.add(temp.concat(String.valueOf(arr[j])));
+                }
+            }
+            for(int j = 0; j < two.size(); j++){
+                ready.add(two.get(j));
+            }
+            one = new ArrayList<String>();
+
+            for(int j = 0; j < two.size(); j++){
+                one.add(two.get(j));
+            }
+            two = new ArrayList<String>();
+            cycle--;
+            len++;
+        }
+
+        Iterator<String> it = ready.iterator();
+        while(it.hasNext()){
+            System.out.println(it.next());
+        }
+    }
+
+    public static void main(String[] args) throws IOException{
+
+        int T;
+        int N;
+        String line = "";
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        line = br.readLine();
+        T = Integer.parseInt(line);
+
+        for(int i = 0; i < T; i++){
+            mapping = new HashMap<Character,Integer>();
+            line = br.readLine();
+            line = br.readLine();
+            doMapping(line);
+            generate(line);
+        }
+    }
+} */
