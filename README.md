@@ -4,3 +4,4 @@
 - https://www.hackerrank.com/challenges/jesse-and-cookies/problem
 - https://www.hackerrank.com/challenges/kundu-and-tree/problem
 - https://www.hackerrank.com/challenges/building-a-list/problem
+- https://www.hackerrank.com/challenges/merge-list/problem
