@@ -8,33 +8,11 @@ public class DiwaliLights {
         }
 
         static long lights(int n) {
-            int res = 0;
-
-            for (int i = 1; i <= n; i++) {
-                long comb = combination(n, i).longValue();
-                System.out.println(comb);
-                res += comb;
+            //Total ways of choosing at least 1 bulb is 2^(n-1)
+            long res = 1;
+            for (int i = 1; i < n; i++) {
+                res = (res * 2) % 100000;
             }
             return res;
         }
-
-        private static BigInteger combination(int n, int r) {
-//        n!/(r!)(n-r)!
-            BigInteger modulo = BigInteger.valueOf(100000);
-            BigInteger nFact = factorial(n);
-            BigInteger rFact = factorial(r);
-            BigInteger differenceFact = factorial(n-r);
-            BigInteger mult = rFact.multiply(differenceFact).mod(modulo);
-
-            return nFact.divide(mult);
-        }
-
-        private static BigInteger factorial(int n) {
-            BigInteger res = BigInteger.valueOf(1);
-            for (int i = 1; i <= n; i++) {
-                res  = res.multiply(BigInteger.valueOf(i));
-            }
-            return res;
-        }
-    }
 }
