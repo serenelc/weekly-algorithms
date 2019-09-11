@@ -14,6 +14,10 @@ public class Solution {
       int index = 0;
       while (index != c.length - 1) {
         int temp = index + 2;
+        if (temp >= c.length - 1) {
+          numJumps++;
+          break;
+        }
         if (c[temp] == 0) {
           index = temp;
         } else {

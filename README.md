@@ -6,3 +6,4 @@
 - https://www.hackerrank.com/challenges/building-a-list/problem
 - https://www.hackerrank.com/challenges/merge-list/problem
 - https://www.hackerrank.com/challenges/diwali-lights/problem
+- https://www.hackerrank.com/interview/interview-preparation-kit/warmup/challenges
