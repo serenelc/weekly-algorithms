@@ -22,10 +22,12 @@ public class Solution {
         for (int i = 0; i < arr.length; i++) {
           List<Integer> arrList = new LinkedList<>(Arrays.asList(integerArr));
           int minIndex = arrList.indexOf(i + 1);
-          Integer temp = integerArr[i];
-          integerArr[i] = i + 1;
-          integerArr[minIndex] = temp;
-          minSwaps++;
+          if (minIndex != i) {
+            Integer temp = integerArr[i];
+            integerArr[i] = i + 1;
+            integerArr[minIndex] = temp;
+            minSwaps++;
+          }
           if (isSorted(integerArr)) {
             break;
           }
