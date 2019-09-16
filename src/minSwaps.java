@@ -10,30 +10,37 @@ public class Solution {
 
     // Complete the minimumSwaps function below.
     static int minimumSwaps(int[] arr) {
-      int minSwaps = 0;
-      //strategy is to move lowest number not in correct position and swap with
-      //the number in its correct position
+        int minSwaps = 0;
+        //strategy is to move lowest number not in correct position and swap with
+        //the number in its correct position
 
-      Integer[] integerArr = new Integer[arr.length];
-      for (int i = 0; i < arr.length; i++) {
-        integerArr[i] = (Integer) arr[i];
-      }
+        Integer[] integerArr = new Integer[arr.length];
 
-      for (int i = 0; i < arr.length; i++) {
-        int minIndex = Arrays.asList(integerArr).indexOf(i + 1);
-        if (minIndex != i) {
+        for (int i = 0; i < arr.length; i++) {
+          integerArr[i] = (Integer) arr[i];
+        }
+
+        List<Integer> arrList = new LinkedList<Integer>(Arrays.asList(integerArr));
+
+        for (int i = 0; i < arr.length; i++) {
+          int minIndex = Arrays.asList(integerArr).indexOf(i + 1);
           Integer temp = integerArr[i];
-          integerArr[i] = i + 1;
-          integerArr[minIndex] = temp;
-          minSwaps++;
+          arrList.remove((Integer) (i + 1));
+          if (minIndex != i) {
+            integerArr[i] = i + 1;
+            integerArr[minIndex] = temp;
+            minSwaps++;
+          }
+          if (temp == minIndex) {
+            arrList.remove((Integer) temp);
+          }
+          if (arrList.isEmpty()) {
+            break;
+          }
         }
-        if (isSorted(integerArr, i)) {
-          break;
-        }
-      }
 
-      System.out.println(Arrays.toString(integerArr) + ", min swaps:" + minSwaps);
-      return minSwaps;
+        System.out.println(Arrays.toString(integerArr) + ", min swaps:" + minSwaps);
+        return minSwaps;
     }
 
     static boolean isSorted(Integer[] arr, int index) {
