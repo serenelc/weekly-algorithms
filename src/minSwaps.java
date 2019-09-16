@@ -15,30 +15,29 @@ public class Solution {
       //the number in its correct position
 
       Integer[] integerArr = new Integer[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-          integerArr[i] = (Integer) arr[i];
-        }
+      for (int i = 0; i < arr.length; i++) {
+        integerArr[i] = (Integer) arr[i];
+      }
 
-        for (int i = 0; i < arr.length; i++) {
-          List<Integer> arrList = new LinkedList<>(Arrays.asList(integerArr));
-          int minIndex = arrList.indexOf(i + 1);
-          if (minIndex != i) {
-            Integer temp = integerArr[i];
-            integerArr[i] = i + 1;
-            integerArr[minIndex] = temp;
-            minSwaps++;
-          }
-          if (isSorted(integerArr)) {
-            break;
-          }
+      for (int i = 0; i < arr.length; i++) {
+        int minIndex = Arrays.asList(integerArr).indexOf(i + 1);
+        if (minIndex != i) {
+          Integer temp = integerArr[i];
+          integerArr[i] = i + 1;
+          integerArr[minIndex] = temp;
+          minSwaps++;
         }
+        if (isSorted(integerArr, i)) {
+          break;
+        }
+      }
 
-        System.out.println(Arrays.toString(integerArr) + ", min swaps:" + minSwaps);
-        return minSwaps;
+      System.out.println(Arrays.toString(integerArr) + ", min swaps:" + minSwaps);
+      return minSwaps;
     }
 
-    static boolean isSorted(Integer[] arr) {
-      for (int i = 0; i < arr.length - 1; i++) {
+    static boolean isSorted(Integer[] arr, int index) {
+      for (int i = index; i < arr.length - 1; i++) {
         if (arr[i] > arr[i + 1]) {
           return false;
         }
