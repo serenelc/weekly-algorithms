@@ -11,46 +11,44 @@ public class Solution {
     // Complete the minimumSwaps function below.
     static int minimumSwaps(int[] arr) {
         int minSwaps = 0;
+        int first = 0;
+        int last = arr.length - 1;
+
+        while (first < last) {
+          while (arr[first] == first + 1 && first < last) {
+            first++;
+          }
+          if (first < last) {
+            int temp = arr[arr[first] - 1];
+            arr[arr[first] - 1] = arr[first];
+            arr[first] = temp;
+            minSwaps++;
+          }
+        }
         //strategy is to move lowest number not in correct position and swap with
         //the number in its correct position
 
-        Integer[] integerArr = new Integer[arr.length];
-
-        for (int i = 0; i < arr.length; i++) {
-          integerArr[i] = (Integer) arr[i];
-        }
-
-        List<Integer> arrList = new LinkedList<Integer>(Arrays.asList(integerArr));
-
-        for (int i = 0; i < arr.length; i++) {
-          int minIndex = Arrays.asList(integerArr).indexOf(i + 1);
-          Integer temp = integerArr[i];
-          arrList.remove((Integer) (i + 1));
-          if (minIndex != i) {
-            integerArr[i] = i + 1;
-            integerArr[minIndex] = temp;
-            minSwaps++;
-          }
-          if (temp == minIndex) {
-            arrList.remove((Integer) temp);
-          }
-          if (arrList.isEmpty()) {
-            break;
-          }
-        }
+        // for (int i = 0; i < arr.length; i++) {
+        //   int minIndex = Arrays.asList(integerArr).indexOf(i + 1);
+        //   Integer temp = integerArr[i];
+        //   arrList.remove((Integer) (i + 1));
+        //   if (minIndex != i) {
+        //     integerArr[i] = i + 1;
+        //     integerArr[minIndex] = temp;
+        //     minSwaps++;
+        //   }
+        //   if (temp == minIndex) {
+        //     arrList.remove((Integer) temp);
+        //   }
+        //   if (arrList.isEmpty()) {
+        //     break;
+        //   }
+        // }
 
         System.out.println(Arrays.toString(integerArr) + ", min swaps:" + minSwaps);
         return minSwaps;
     }
 
-    static boolean isSorted(Integer[] arr, int index) {
-      for (int i = index; i < arr.length - 1; i++) {
-        if (arr[i] > arr[i + 1]) {
-          return false;
-        }
-      }
-      return true;
-    }
 
     private static final Scanner scanner = new Scanner(System.in);
 
