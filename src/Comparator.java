@@ -19,34 +19,7 @@ class Checker implements Comparator<Player> {
       return -1;
     } else {
       //equal
-      String aName = a.name;
-      String bName = b.name;
-      int compRes = 0;
-      int j = 0;
-
-      for (int i = 0; i < Math.min(aName.length(), bName.length()); i++) {
-        if (aName.charAt(i) < bName.charAt(j)) {
-          compRes = -1;
-          break;
-        } else if (aName.charAt(i) > bName.charAt(j)) {
-          compRes = 1;
-          break;
-        } else {
-          //equal
-          j++;
-        }
-
-        // bb bbb is ascending
-        if (j == aName.length()) {
-          compRes = -1;
-          break;
-        } else if (j == bName.length()) {
-          compRes = 1;
-          break;
-        }
-      }
-
-      return compRes;
+      return a.name.compareTo(b.name);
     }
   }
 }
