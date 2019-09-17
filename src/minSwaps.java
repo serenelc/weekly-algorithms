@@ -25,6 +25,7 @@ public class Solution {
             minSwaps++;
           }
         }
+
         //strategy is to move lowest number not in correct position and swap with
         //the number in its correct position
 
