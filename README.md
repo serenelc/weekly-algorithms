@@ -8,3 +8,6 @@
 - https://www.hackerrank.com/challenges/diwali-lights/problem
 - https://www.hackerrank.com/interview/interview-preparation-kit/warmup/challenges
 - https://www.hackerrank.com/interview/interview-preparation-kit/arrays/challenges
+- https://www.hackerrank.com/interview/interview-preparation-kit/strings
+/challenges 
+- 

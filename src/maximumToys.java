@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.regex.*;
 
-public class Solution {
+public class maximumToys {
 
     // Complete the maximumToys function below.
     static int maximumToys(int[] prices, int k) {
